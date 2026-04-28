@@ -48,7 +48,6 @@
     </div>
 
     <div class="parameters-container" style="margin-top: 1rem;">
-      <!-- Parameters (same as before) -->
       <div class="param-group" data-scen="freefall">
         <h3>Free Fall Parameters</h3>
         <div class="param-row"><label>Mass <span class="val-pill" id="ff_mass-val">2.0</span> kg</label><input type="range" data-param="ff_mass" min="0.5" max="5" step="0.5"/></div>
@@ -136,7 +135,7 @@
         <button class="ex-tab" data-ex="ex-rf">Ramp+Friction</button>
         <button class="ex-tab" data-ex="ex-sl">Spring</button>
         <button class="ex-tab" data-ex="ex-pend">Pendulum</button>
-        <button class="ex-tab" data-ex="ex-ae">W=Fdcosθ</button>
+        <button class="ex-tab" data-ex="ex-ae">Work Angle</button>
       </div>
       <div class="example-panel active" id="ex-ff"><p><strong>Find speed at bottom (m=2kg, h=10m):</strong></p>
         <ol class="worked-steps">
@@ -154,9 +153,25 @@
       </div>
       <div class="example-panel" id="ex-sl"><p><strong>Spring Launch (k=200, Δx=0.15):</strong></p>
         <ol class="worked-steps">
-          <li>E<sub>i</sub> = PE<sub>s,i</sub> = ½kΔx²</li>
+          <li>E<sub>i</sub> = PE<sub>s,i</sub> = ½kΔx² = 2.25 J</li>
           <li>E<sub>f</sub> = PE<sub>g,f</sub> = mgh</li>
-          <li>E<sub>i</sub> = E<sub>f</sub> → h = 0.23m</li>
+          <li>E<sub>i</sub> = E<sub>f</sub> → h = 2.25/9.8 = 0.23m</li>
+        </ol>
+      </div>
+      <div class="example-panel" id="ex-pend"><p><strong>Pendulum (L=1.5m, θ=40°): Find v at bottom</strong></p>
+        <ol class="worked-steps">
+          <li>h = L(1 − cosθ) = 1.5(1 − 0.766) = 0.35m</li>
+          <li>System: ball + Earth (Tension does NO work)</li>
+          <li>E<sub>i</sub> = E<sub>f</sub> → mgh = ½mv²</li>
+          <li>v = √(2gh) = √(2·9.8·0.35) = 2.6 m/s</li>
+        </ol>
+      </div>
+      <div class="example-panel" id="ex-ae"><p><strong>Work at an Angle (F=20N, d=4m, θ=30°):</strong></p>
+        <ol class="worked-steps">
+          <li>Identify components: Only F<sub>x</sub> = F·cosθ does work.</li>
+          <li>W<sub>EXT</sub> = F · d · cosθ</li>
+          <li>W<sub>EXT</sub> = 20 · 4 · cos(30°)</li>
+          <li>W<sub>EXT</sub> = 80 · 0.866 = 69.3 J</li>
         </ol>
       </div>
     </div>
