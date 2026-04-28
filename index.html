@@ -18,7 +18,7 @@
     <div class="hero-copy">
       <p class="kicker">The Thinking Experiment &mdash; Work &amp; Energy</p>
       <h1>Work &amp; Energy Concepts Simulator</h1>
-      <p class="subtitle">Explore five interactive scenarios. Adjust parameters, watch animated force arrows and energy bar charts, and apply the 5-step problem-solving method from your infographic.</p>
+      <p class="subtitle">Explore interactive scenarios. Adjust parameters, watch animated force arrows and energy bar charts, and apply the 5-step problem-solving method from your infographic.</p>
     </div>
     <button id="themeBtn" class="ghost theme-toggle">🌙 Dark Mode</button>
   </div>
@@ -38,108 +38,114 @@
     </div>
 
     <!-- Playback -->
-    <div class="button-row" style="margin-top:1rem">
-      <button id="playBtn"  class="primary">▶ Run</button>
-      <button id="pauseBtn" class="ghost" disabled>⏸ Pause</button>
-      <button id="resetBtn" class="ghost">↺ Reset</button>
+    <div class="playback-controls" style="margin-top:1rem; display: flex; flex-direction: column; gap: 0.5rem;">
+      <div class="button-row">
+        <button id="playBtn"  class="primary" style="flex: 2;">▶ Run</button>
+        <button id="pauseBtn" class="ghost" disabled>⏸ Pause</button>
+        <button id="stepBtn"  class="ghost">⏭ Step</button>
+        <button id="resetBtn" class="ghost">↺ Reset</button>
+      </div>
+      <div class="toggle-row" style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;">
+        <label style="display: flex; flex-direction: row; align-items: center; gap: 0.4rem; cursor: pointer;">
+          <input type="checkbox" id="slowMoToggle"> 🐢 Slow Motion
+        </label>
+      </div>
     </div>
 
-    <!-- FREE FALL params -->
-    <div class="param-group" data-scen="freefall">
-      <h3>Free Fall Parameters</h3>
-      <div class="param-row">
-        <label>Mass <span class="val-pill" id="ff_mass-val">2.0</span> kg</label>
-        <input type="range" data-param="ff_mass" min="0.5" max="5" step="0.5" data-decimals="1"/>
+    <!-- PARAMETERS -->
+    <div class="parameters-container" style="margin-top: 1rem;">
+      <!-- FREE FALL params -->
+      <div class="param-group" data-scen="freefall">
+        <h3>Free Fall Parameters</h3>
+        <div class="param-row">
+          <label>Mass <span class="val-pill" id="ff_mass-val">2.0</span> kg</label>
+          <input type="range" data-param="ff_mass" min="0.5" max="5" step="0.5" data-decimals="1"/>
+        </div>
+        <div class="param-row">
+          <label>Drop Height <span class="val-pill" id="ff_height-val">10.0</span> m</label>
+          <input type="range" data-param="ff_height" min="2" max="20" step="1" data-decimals="1"/>
+        </div>
       </div>
-      <div class="param-row">
-        <label>Drop Height <span class="val-pill" id="ff_height-val">10.0</span> m</label>
-        <input type="range" data-param="ff_height" min="2" max="20" step="1" data-decimals="1"/>
-      </div>
-      <p style="margin-top:.6rem;font-size:.83rem;color:var(--muted)">System: ball + Earth. Gravity is <em>internal</em> → E conserved. No external work.</p>
-    </div>
 
-    <!-- RAMP params -->
-    <div class="param-group" data-scen="rampfriction" hidden>
-      <h3>Ramp + Friction Parameters</h3>
-      <div class="param-row">
-        <label>Mass <span class="val-pill" id="rf_mass-val">2.0</span> kg</label>
-        <input type="range" data-param="rf_mass" min="0.5" max="5" step="0.5" data-decimals="1"/>
+      <!-- RAMP params -->
+      <div class="param-group" data-scen="rampfriction" hidden>
+        <h3>Ramp + Friction Parameters</h3>
+        <div class="param-row">
+          <label>Mass <span class="val-pill" id="rf_mass-val">2.0</span> kg</label>
+          <input type="range" data-param="rf_mass" min="0.5" max="5" step="0.5" data-decimals="1"/>
+        </div>
+        <div class="param-row">
+          <label>Angle <span class="val-pill" id="rf_angle-val">30.0</span>°</label>
+          <input type="range" data-param="rf_angle" min="10" max="60" step="5" data-decimals="0"/>
+        </div>
+        <div class="param-row">
+          <label>μ_k <span class="val-pill" id="rf_mu-val">0.2</span></label>
+          <input type="range" data-param="rf_mu" min="0" max="0.5" step="0.05" data-decimals="2"/>
+        </div>
+        <div class="param-row">
+          <label>Length <span class="val-pill" id="rf_length-val">6.0</span> m</label>
+          <input type="range" data-param="rf_length" min="2" max="10" step="1" data-decimals="1"/>
+        </div>
       </div>
-      <div class="param-row">
-        <label>Angle <span class="val-pill" id="rf_angle-val">30.0</span>°</label>
-        <input type="range" data-param="rf_angle" min="10" max="60" step="5" data-decimals="0"/>
-      </div>
-      <div class="param-row">
-        <label>μ_k <span class="val-pill" id="rf_mu-val">0.2</span></label>
-        <input type="range" data-param="rf_mu" min="0" max="0.5" step="0.05" data-decimals="2"/>
-      </div>
-      <div class="param-row">
-        <label>Length <span class="val-pill" id="rf_length-val">6.0</span> m</label>
-        <input type="range" data-param="rf_length" min="2" max="10" step="1" data-decimals="1"/>
-      </div>
-      <p style="margin-top:.6rem;font-size:.83rem;color:var(--muted)">Friction is non-conservative → use Work-Energy Theorem: E_f = E_i + W_friction.</p>
-    </div>
 
-    <!-- SPRING params -->
-    <div class="param-group" data-scen="springlaunch" hidden>
-      <h3>Spring Launch Parameters</h3>
-      <div class="param-row">
-        <label>Mass <span class="val-pill" id="sl_mass-val">1.0</span> kg</label>
-        <input type="range" data-param="sl_mass" min="0.2" max="2" step="0.2" data-decimals="1"/>
+      <!-- SPRING params -->
+      <div class="param-group" data-scen="springlaunch" hidden>
+        <h3>Spring Launch Parameters</h3>
+        <div class="param-row">
+          <label>Mass <span class="val-pill" id="sl_mass-val">1.0</span> kg</label>
+          <input type="range" data-param="sl_mass" min="0.2" max="2" step="0.2" data-decimals="1"/>
+        </div>
+        <div class="param-row">
+          <label>Spring k <span class="val-pill" id="sl_k-val">200</span> N/m</label>
+          <input type="range" data-param="sl_k" min="50" max="500" step="50" data-decimals="0"/>
+        </div>
+        <div class="param-row">
+          <label>Compression Δx <span class="val-pill" id="sl_dx-val">0.2</span> m</label>
+          <input type="range" data-param="sl_dx" min="0.05" max="0.3" step="0.05" data-decimals="2"/>
+        </div>
       </div>
-      <div class="param-row">
-        <label>Spring k <span class="val-pill" id="sl_k-val">200</span> N/m</label>
-        <input type="range" data-param="sl_k" min="50" max="500" step="50" data-decimals="0"/>
-      </div>
-      <div class="param-row">
-        <label>Compression Δx <span class="val-pill" id="sl_dx-val">0.2</span> m</label>
-        <input type="range" data-param="sl_dx" min="0.05" max="0.3" step="0.05" data-decimals="2"/>
-      </div>
-      <p style="margin-top:.6rem;font-size:.83rem;color:var(--muted)">Conservative only → E_i = E_f. U_s → KE → U_g.</p>
-    </div>
 
-    <!-- PENDULUM params -->
-    <div class="param-group" data-scen="pendulum" hidden>
-      <h3>Pendulum Parameters</h3>
-      <div class="param-row">
-        <label>Mass <span class="val-pill" id="pend_mass-val">1.0</span> kg</label>
-        <input type="range" data-param="pend_mass" min="0.2" max="2" step="0.2" data-decimals="1"/>
+      <!-- PENDULUM params -->
+      <div class="param-group" data-scen="pendulum" hidden>
+        <h3>Pendulum Parameters</h3>
+        <div class="param-row">
+          <label>Mass <span class="val-pill" id="pend_mass-val">1.0</span> kg</label>
+          <input type="range" data-param="pend_mass" min="0.2" max="2" step="0.2" data-decimals="1"/>
+        </div>
+        <div class="param-row">
+          <label>Length <span class="val-pill" id="pend_L-val">1.5</span> m</label>
+          <input type="range" data-param="pend_L" min="0.5" max="3" step="0.25" data-decimals="2"/>
+        </div>
+        <div class="param-row">
+          <label>Release Angle <span class="val-pill" id="pend_theta0-val">40</span>°</label>
+          <input type="range" data-param="pend_theta0" min="10" max="80" step="5" data-decimals="0"/>
+        </div>
       </div>
-      <div class="param-row">
-        <label>Length <span class="val-pill" id="pend_L-val">1.5</span> m</label>
-        <input type="range" data-param="pend_L" min="0.5" max="3" step="0.25" data-decimals="2"/>
-      </div>
-      <div class="param-row">
-        <label>Release Angle <span class="val-pill" id="pend_theta0-val">40</span>°</label>
-        <input type="range" data-param="pend_theta0" min="10" max="80" step="5" data-decimals="0"/>
-      </div>
-      <p style="margin-top:.6rem;font-size:.83rem;color:var(--muted)">Tension ⊥ motion → W_T = 0. Conservative → E_i = E_f.</p>
-    </div>
 
-    <!-- ANGLE EXPLORER params -->
-    <div class="param-group" data-scen="angleexplorer" hidden>
-      <h3>Angle Explorer Parameters</h3>
-      <div class="param-row">
-        <label>Force F <span class="val-pill" id="ae_F-val">20.0</span> N</label>
-        <input type="range" data-param="ae_F" min="1" max="50" step="1" data-decimals="0"/>
+      <!-- ANGLE EXPLORER params -->
+      <div class="param-group" data-scen="angleexplorer" hidden>
+        <h3>Angle Explorer Parameters</h3>
+        <div class="param-row">
+          <label>Force F <span class="val-pill" id="ae_F-val">20.0</span> N</label>
+          <input type="range" data-param="ae_F" min="1" max="50" step="1" data-decimals="0"/>
+        </div>
+        <div class="param-row">
+          <label>Angle θ <span class="val-pill" id="ae_theta-val">0</span>°</label>
+          <input type="range" data-param="ae_theta" min="0" max="180" step="5" data-decimals="0"/>
+        </div>
+        <div class="param-row">
+          <label>Distance d <span class="val-pill" id="ae_d-val">4.0</span> m</label>
+          <input type="range" data-param="ae_d" min="1" max="6" step="0.5" data-decimals="1"/>
+        </div>
+        <div class="param-row">
+          <label>μ_k <span class="val-pill" id="ae_mu-val">0.1</span></label>
+          <input type="range" data-param="ae_mu" min="0" max="0.4" step="0.05" data-decimals="2"/>
+        </div>
+        <div class="param-row">
+          <label>Mass <span class="val-pill" id="ae_mass-val">3.0</span> kg</label>
+          <input type="range" data-param="ae_mass" min="1" max="6" step="0.5" data-decimals="1"/>
+        </div>
       </div>
-      <div class="param-row">
-        <label>Angle θ <span class="val-pill" id="ae_theta-val">0</span>°</label>
-        <input type="range" data-param="ae_theta" min="0" max="180" step="5" data-decimals="0"/>
-      </div>
-      <div class="param-row">
-        <label>Distance d <span class="val-pill" id="ae_d-val">4.0</span> m</label>
-        <input type="range" data-param="ae_d" min="1" max="6" step="0.5" data-decimals="1"/>
-      </div>
-      <div class="param-row">
-        <label>μ_k <span class="val-pill" id="ae_mu-val">0.1</span></label>
-        <input type="range" data-param="ae_mu" min="0" max="0.4" step="0.05" data-decimals="2"/>
-      </div>
-      <div class="param-row">
-        <label>Mass <span class="val-pill" id="ae_mass-val">3.0</span> kg</label>
-        <input type="range" data-param="ae_mass" min="1" max="6" step="0.5" data-decimals="1"/>
-      </div>
-      <p style="margin-top:.6rem;font-size:.83rem;color:var(--muted)">W = F·d·cos θ. Try θ=0°, 90°, 180° and observe W change.</p>
     </div>
 
     <!-- Force Legend -->
@@ -154,16 +160,16 @@
   </section>
 
   <!-- CENTER: Canvas -->
-  <section class="panel wide" aria-label="Simulation canvas">
+  <section class="panel wide" aria-label="Simulation canvas" style="display: flex; flex-direction: column;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem">
       <div>
-        <h2 style="font-size:1rem" id="scene-title">Free Fall</h2>
-        <p style="font-size:.83rem;color:var(--muted)" id="scene-sub">Ball drops from rest — watch U_g convert to KE</p>
+        <h2 style="font-size:1.2rem" id="scene-title">Free Fall</h2>
+        <p style="font-size:.9rem;color:var(--muted)" id="scene-sub">Ball drops from rest — watch U_g convert to KE</p>
       </div>
-      <span id="guide-method" style="font-size:.82rem;font-weight:700;color:var(--accent)">Method: E_i = E_f</span>
+      <span id="guide-method" style="font-size:.9rem;font-weight:700;color:var(--accent)">Method: E_i = E_f</span>
     </div>
 
-    <div class="canvas-wrap">
+    <div class="canvas-wrap" style="flex: 1; min-height: 500px;">
       <canvas id="simCanvas"></canvas>
     </div>
 
@@ -211,22 +217,15 @@
           <p style="font-size:.76rem;color:var(--muted)">By non-conservative forces</p>
         </div>
       </div>
-      <div class="misconceptions" style="margin-top:1rem">
-        <h3>⚠ Common Misconceptions</h3>
-        <div class="misconception-item">❌ "If the object moves, energy was added." — Motion alone doesn't mean external work. See Ramp with μ=0 or Free Fall.</div>
-        <div class="misconception-item">❌ "Gravity always adds energy." — In the ball+Earth system, gravity is <em>internal</em>. It transforms energy, doesn't add it.</div>
-        <div class="misconception-item misconception-fix">✅ External work requires a force with a component <em>parallel</em> to displacement, coming from <em>outside</em> the defined system.</div>
-      </div>
     </div>
 
     <!-- TAB 2: Problem-Solving Guide -->
     <div class="tab-panel" data-tab="guide">
-      <p style="font-size:.88rem;color:var(--muted);margin-bottom:.6rem">The highlighted step is the key method for the <strong>currently selected scenario</strong>.</p>
       <div class="ps-steps">
         <div class="ps-step">
           <p class="ps-step-num">Step 1</p>
           <p class="ps-step-title">Define the System</p>
-          <p>Choose what's included: Object only? Object + Earth (adds U_g)? Object + Spring (adds U_s)? Your system choice determines which forces are internal vs. external.</p>
+          <p>Choose what's included: Object only? Object + Earth (adds U_g)? Object + Spring (adds U_s)?</p>
         </div>
         <div class="ps-step">
           <p class="ps-step-num">Step 2</p>
@@ -236,20 +235,17 @@
         <div class="ps-step" id="ps-conserve">
           <p class="ps-step-num">Step 3 — Path A</p>
           <p class="ps-step-title">Conservative Forces Only → Use E_i = E_f</p>
-          <p>If only gravity/spring/tension act (no friction, no applied push), total mechanical energy is conserved. <strong>E_i = E_f</strong> → solve directly.</p>
-          <div class="eq-box">KE_i + U_g,i + U_s,i = KE_f + U_g,f + U_s,f</div>
+          <p>If only gravity/spring/tension act, total mechanical energy is conserved. <strong>E_i = E_f</strong>.</p>
         </div>
         <div class="ps-step" id="ps-work-energy">
           <p class="ps-step-num">Step 3 — Path B</p>
           <p class="ps-step-title">Non-Conservative Forces Present → Use Work-Energy Theorem</p>
-          <p>If friction or an applied force acts, use <strong>E_f = E_i + W_ext</strong> where W_ext is the sum of all non-conservative work.</p>
-          <div class="eq-box">E_f = E_i + W_friction + W_applied</div>
+          <p>If friction or an applied force acts, use <strong>E_f = E_i + W_ext</strong>.</p>
         </div>
         <div class="ps-step">
           <p class="ps-step-num">Step 4</p>
           <p class="ps-step-title">Calculate Work (if needed)</p>
-          <p>Use <strong>W = F · d · cos θ</strong> where θ is the angle between the force vector and displacement vector.</p>
-          <div class="eq-box">θ=0° → W=Fd (max) &nbsp;|&nbsp; θ=90° → W=0 &nbsp;|&nbsp; θ=180° → W=−Fd</div>
+          <p>Use <strong>W = F · d · cos θ</strong>.</p>
         </div>
         <div class="ps-step">
           <p class="ps-step-num">Step 5</p>
@@ -277,7 +273,6 @@
           <li>Energies: KE and U_g only. No spring.</li>
           <li>Conservative only → use E_i = E_f.</li>
           <li><div class="eq-box">mgh_i + 0 = 0 + ½mv²<br>(2)(9.8)(10) = ½(2)v²<br>196 = v² → v = 14 m/s</div></li>
-          <li>Check: units are m/s ✓. Mass cancels — speed is independent of mass ✓.</li>
         </ol>
       </div>
 
@@ -288,7 +283,6 @@
           <li>Energies: KE, U_g. Friction is non-conservative.</li>
           <li>Use Work-Energy Theorem: E_f = E_i + W_friction.</li>
           <li><div class="eq-box">W_friction = −μ_k·mg·cosα·d = −(0.2)(2)(9.8)(cos30°)(6) = −20.4 J<br>E_i = mgh = (2)(9.8)(3) = 58.8 J<br>E_f = 58.8 − 20.4 = 38.4 J = ½mv²<br>v = √(2·38.4/2) = 6.2 m/s</div></li>
-          <li>Compare to frictionless: v = √(2gh) = 7.67 m/s. Friction reduced final speed ✓.</li>
         </ol>
       </div>
 
@@ -299,7 +293,6 @@
           <li>Energies: U_s initially, U_g finally (KE = 0 at max height).</li>
           <li>E_i = E_f → U_s,i = U_g,f.</li>
           <li><div class="eq-box">½kΔx² = mgh<br>½(200)(0.15)² = (1)(9.8)h<br>2.25 = 9.8h → h = 0.23 m</div></li>
-          <li>Check: If k doubles, h doubles. If Δx doubles, h quadruples (quadratic) ✓.</li>
         </ol>
       </div>
 
@@ -307,10 +300,9 @@
         <p style="font-size:.88rem;color:var(--muted);margin-bottom:.5rem"><strong>A pendulum (L=1.5 m) is released from 40°. Find v at the bottom.</strong></p>
         <ol class="worked-steps">
           <li>System: bob + Earth. Tension ⊥ motion → W_T = 0. Conservative.</li>
-          <li>h = L(1−cosθ) = 1.5(1−cos40°) = 1.5(1−0.766) = 0.351 m.</li>
+          <li>h = L(1−cosθ) = 1.5(1−cos40°) = 0.351 m.</li>
           <li>E_i = E_f → mgh = ½mv² → v = √(2gh).</li>
           <li><div class="eq-box">v = √(2·9.8·0.351) = √6.88 = 2.62 m/s</div></li>
-          <li>Mass cancels — speed at bottom is independent of bob mass ✓.</li>
         </ol>
       </div>
 
@@ -321,7 +313,6 @@
           <li>Only the horizontal component F·cosθ does work along the horizontal displacement.</li>
           <li>Apply W = F·d·cosθ.</li>
           <li><div class="eq-box">W = (20)(4)cos(30°) = 80 × 0.866 = 69.3 J</div></li>
-          <li>At θ=90°: W = 80·cos90° = 0. The force is perpendicular → does zero work ✓.</li>
         </ol>
       </div>
     </div>

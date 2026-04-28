@@ -255,3 +255,52 @@ button:focus-visible, input:focus-visible { outline: 3px solid #ffad3b; outline-
   .hero { padding: .85rem .9rem; }
   .hero-top { flex-direction: column; align-items: stretch; }
 }
+
+/* ── UI Fixes for larger canvas ────────────────────────────── */
+.canvas-wrap {
+  border: 1.5px solid var(--border);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+  background: var(--card);
+}
+
+.wide {
+  min-height: 600px; /* Ensure enough space for the large canvas */
+}
+
+.playback-controls .button-row {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.playback-controls .button-row button {
+  padding: 0.6rem 0.4rem;
+  font-size: 0.85rem;
+}
+
+#stepBtn {
+  background-color: #f1f5f9;
+}
+
+[data-theme="dark"] #stepBtn {
+  background-color: #1e293b;
+}
+
+.metrics-grid {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.metric-card {
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero h1 {
+  color: var(--accent);
+}
+
+.val-pill {
+  min-width: 45px;
+  text-align: center;
+}
