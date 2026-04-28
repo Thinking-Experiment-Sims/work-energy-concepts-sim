@@ -48,6 +48,7 @@
     </div>
 
     <div class="parameters-container" style="margin-top: 1rem;">
+      <!-- Parameters (same as before) -->
       <div class="param-group" data-scen="freefall">
         <h3>Free Fall Parameters</h3>
         <div class="param-row"><label>Mass <span class="val-pill" id="ff_mass-val">2.0</span> kg</label><input type="range" data-param="ff_mass" min="0.5" max="5" step="0.5"/></div>
@@ -57,7 +58,7 @@
         <h3>Ramp + Friction Parameters</h3>
         <div class="param-row"><label>Mass <span class="val-pill" id="rf_mass-val">2.0</span> kg</label><input type="range" data-param="rf_mass" min="0.5" max="5" step="0.5"/></div>
         <div class="param-row"><label>Angle <span class="val-pill" id="rf_angle-val">30.0</span>°</label><input type="range" data-param="rf_angle" min="10" max="60" step="5"/></div>
-        <div class="param-row"><label>μ_k <span class="val-pill" id="rf_mu-val">0.2</span></label><input type="range" data-param="rf_mu" min="0" max="0.5" step="0.05" data-decimals="2"/></div>
+        <div class="param-row"><label>μ<sub>k</sub> <span class="val-pill" id="rf_mu-val">0.2</span></label><input type="range" data-param="rf_mu" min="0" max="0.5" step="0.05" data-decimals="2"/></div>
         <div class="param-row"><label>Length <span class="val-pill" id="rf_length-val">6.0</span> m</label><input type="range" data-param="rf_length" min="2" max="10" step="1"/></div>
       </div>
       <div class="param-group" data-scen="springlaunch" hidden>
@@ -77,7 +78,7 @@
         <div class="param-row"><label>Force F <span class="val-pill" id="ae_F-val">20.0</span> N</label><input type="range" data-param="ae_F" min="1" max="50" step="1"/></div>
         <div class="param-row"><label>Angle θ <span class="val-pill" id="ae_theta-val">0</span>°</label><input type="range" data-param="ae_theta" min="0" max="180" step="5"/></div>
         <div class="param-row"><label>Distance d <span class="val-pill" id="ae_d-val">4.0</span> m</label><input type="range" data-param="ae_d" min="1" max="6" step="0.5"/></div>
-        <div class="param-row"><label>μ_k <span class="val-pill" id="ae_mu-val">0.1</span></label><input type="range" data-param="ae_mu" min="0" max="0.4" step="0.05" data-decimals="2"/></div>
+        <div class="param-row"><label>μ<sub>k</sub> <span class="val-pill" id="ae_mu-val">0.1</span></label><input type="range" data-param="ae_mu" min="0" max="0.4" step="0.05" data-decimals="2"/></div>
         <div class="param-row"><label>Mass <span class="val-pill" id="ae_mass-val">3.0</span> kg</label><input type="range" data-param="ae_mass" min="1" max="6" step="0.5"/></div>
       </div>
     </div>
@@ -148,7 +149,14 @@
         <ol class="worked-steps">
           <li>W<sub>EXT</sub> = −f<sub>k</sub>·d = −20.4 J</li>
           <li>E<sub>f</sub> = E<sub>i</sub> + W<sub>EXT</sub></li>
-          <li><div class="eq-box">½mv² = mgh + W<sub>EXT</sub><br>½(2)v² = 58.8 − 20.4<br>v = √38.4 = 6.2 m/s</div></li>
+          <li><div class="eq-box">½mv² = PE<sub>g,i</sub> + W<sub>EXT</sub><br>½(2)v² = 58.8 − 20.4<br>v = √38.4 = 6.2 m/s</div></li>
+        </ol>
+      </div>
+      <div class="example-panel" id="ex-sl"><p><strong>Spring Launch (k=200, Δx=0.15):</strong></p>
+        <ol class="worked-steps">
+          <li>E<sub>i</sub> = PE<sub>s,i</sub> = ½kΔx²</li>
+          <li>E<sub>f</sub> = PE<sub>g,f</sub> = mgh</li>
+          <li>E<sub>i</sub> = E<sub>f</sub> → h = 0.23m</li>
         </ol>
       </div>
     </div>
