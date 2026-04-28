@@ -153,7 +153,7 @@ function drawFreeFall(W, H) {
   const cy = ground - s.y * scale;
   const r = 35;
   drawCircle(W * 0.4, cy, r, COLORS.obj);
-  if (!s.done) drawArrow(W*0.4, cy, W*0.4, cy + 90, COLORS.gravity, 'Fg');
+  if (!s.done) drawArrow(W*0.4, cy, W*0.4, cy + 100, COLORS.gravity, 'Fg');
   ctx.fillStyle = COLORS.ke; ctx.font = 'bold 18px IBM Plex Sans';
   ctx.fillText(`v = ${Math.abs(s.vel).toFixed(2)} m/s`, W*0.4 + r + 15, cy + 6);
 }
@@ -166,18 +166,41 @@ function drawRamp(W, H) {
   const x0 = W * 0.1;
   const xTop = x0, yTop = ground - rampLenPx * Math.sin(α);
   const xBot = x0 + rampLenPx * Math.cos(α), yBot = ground;
+  
+  // Draw ramp
   ctx.strokeStyle = '#64748b'; ctx.lineWidth = 6;
   ctx.beginPath(); ctx.moveTo(xTop, yTop); ctx.lineTo(xBot, yBot); ctx.stroke();
+  
   const prog = s.pos / s.L;
-  const bx = xTop + (xBot - xTop) * prog, by = yTop + (yBot - yTop) * prog;
-  const bsize = 50;
-  ctx.save(); ctx.translate(bx, by); ctx.rotate(-α);
+  const bx = xTop + (xBot - xTop) * prog;
+  const by = yTop + (yBot - yTop) * prog;
+  const bsize = 60;
+
+  // Draw block
+  ctx.save();
+  ctx.translate(bx, by);
+  ctx.rotate(-α);
   drawRect(-bsize/2, -bsize, bsize, bsize, COLORS.obj);
   ctx.restore();
-  drawArrow(bx, by - bsize/2, bx + (-Math.sin(α))*80, by + (-Math.cos(α))*80, COLORS.normal, 'N');
+  
+  // Center of block in global coords
+  // Local center is (0, -bsize/2). Rotate by -α:
+  // cx = bx - (-bsize/2)*sin(-α) = bx + (bsize/2)*sin(-α) = bx - (bsize/2)*sin(α)
+  // cy = by + (-bsize/2)*cos(-α) = by - (bsize/2)*cos(α)
+  const cx = bx - (bsize/2) * Math.sin(α);
+  const cy = by - (bsize/2) * Math.cos(α);
+
+  // Normal: (sinα, -cosα)
+  drawArrow(cx, cy, cx + Math.sin(α)*100, cy - Math.cos(α)*100, COLORS.normal, 'N');
+  
+  // Friction: (-cosα, -sinα)
   const tx = Math.cos(α), ty = Math.sin(α); 
-  if (s.vel > 0.01) drawArrow(bx, by - bsize/2, bx - tx*90, by - ty*90, COLORS.friction, 'fk');
-  drawArrow(bx, by - bsize/2, bx, by - bsize/2 + 100, COLORS.gravity, 'Fg');
+  if (s.vel > 0.01) {
+    drawArrow(cx, cy, cx - tx*110, cy - ty*110, COLORS.friction, 'fk');
+  }
+  
+  // Gravity: (0, 1)
+  drawArrow(cx, cy, cx, cy + 120, COLORS.gravity, 'Fg');
 }
 
 function drawSpring(W, H) {
@@ -205,13 +228,13 @@ function drawPendulum(W, H) {
   drawCircle(bx, by, 40, COLORS.obj);
   const dx = px - bx, dy = py - by, dist = Math.sqrt(dx*dx + dy*dy);
   drawArrow(bx, by, bx + (dx/dist)*100, by + (dy/dist)*100, COLORS.tension, 'T');
-  drawArrow(bx, by, bx, by + 100, COLORS.gravity, 'Fg');
+  drawArrow(bx, by, bx, by + 120, COLORS.gravity, 'Fg');
 }
 
 function drawAngleExplorer(W, H) {
   const s = sim.state, p = sim.params, gnd = H - 50;
   const bx = W * 0.1 + (s.pos / p.ae_d) * (W * 0.7);
-  const bsize = 60, by = gnd - bsize/2, θ = p.ae_theta * Math.PI / 180;
+  const bsize = 70, by = gnd - bsize/2, θ = p.ae_theta * Math.PI / 180;
   drawRect(bx - bsize/2, by - bsize/2, bsize, bsize, COLORS.obj);
   const Flen = 130;
   drawArrow(bx, by, bx + Math.cos(θ)*Flen, by - Math.sin(θ)*Flen, COLORS.applied, 'F');
